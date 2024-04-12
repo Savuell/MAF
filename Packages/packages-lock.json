@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "co.parabox.stl": {
-      "version": "https://github.com/karl-/pb_Stl.git",
+      "version": "file:co.parabox.stl",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b6b2a6815f81ea2c61ae9f22d8e0635d363b5212"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.burst": {
       "version": "1.8.12",
