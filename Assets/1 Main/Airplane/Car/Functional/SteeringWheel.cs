@@ -26,7 +26,7 @@ public class SteeringWheel : MonoBehaviour
             }
             else rot0 = 999;
         }
-        else steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steeringWheel.transform.localEulerAngles.z), Mathf.Abs(steerAngle * Time.deltaTime)));
+        else steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steeringWheel.transform.localEulerAngles.z), Mathf.Abs(steerAngle * Time.deltaTime * 5)));
         Calculate();
     }
     void Calculate()
