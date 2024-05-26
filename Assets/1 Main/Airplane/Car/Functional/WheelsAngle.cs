@@ -7,8 +7,8 @@ public class WheelsAngle : MonoBehaviour
     [SerializeField] private GameObject[] wheels = new GameObject[2];
     [SerializeField] private GameObject[] points = new GameObject[2];
     [SerializeField] private GameObject stick;
-    [SerializeField] private float rotate;
     [SerializeField] private WheelCollider[] colliders = new WheelCollider[2];
+    [HideInInspector] public float rotate;
     void Update()
     {
         stick.transform.position = (points[0].transform.position + points[1].transform.position) / 2;

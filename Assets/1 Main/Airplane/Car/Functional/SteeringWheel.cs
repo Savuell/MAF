@@ -13,7 +13,7 @@ public class SteeringWheel : MonoBehaviour
     private float rot0;
     private float deltaRot, preRot;
     private int times360;
-    public float steerAngle;
+    [HideInInspector] public float steerAngle;
     void FixedUpdate()
     {
         if (handed > 0)
@@ -26,7 +26,11 @@ public class SteeringWheel : MonoBehaviour
             }
             else rot0 = 999;
         }
-        else steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steeringWheel.transform.localEulerAngles.z), Mathf.Abs(steerAngle * Time.deltaTime * 5)));
+        else
+        {
+            rot0 = 999;
+            steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steeringWheel.transform.localEulerAngles.z), Mathf.Abs(steerAngle * Time.deltaTime * 5)));
+        }
         Calculate();
     }
     void Calculate()
