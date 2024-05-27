@@ -6,6 +6,7 @@ using UnityEditor.UIElements;
 public class TurningSignal : MonoBehaviour
 {
     [SerializeField] private Lever lever;
+    [SerializeField] private ButtonCar alarm;
     [SerializeField] private GameObject[] signals = new GameObject[4];
     [SerializeField] private GameObject[] headlights = new GameObject[4];
     private bool flash;
@@ -17,7 +18,7 @@ public class TurningSignal : MonoBehaviour
     }
     void TurnSignal()
     {
-        if(!flash)
+        if(!flash&&!alarm.button)
         {
             if(turn==2)StartCoroutine(WaitFlash(0));
             if (turn == -2)StartCoroutine(WaitFlash(1));

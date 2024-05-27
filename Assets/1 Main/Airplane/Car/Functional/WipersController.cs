@@ -23,7 +23,8 @@ public class WipersController : MonoBehaviour
                 wait = 10;
                 break; 
         }
-        if (preWait != wait)timer = wait;
+        if (preWait != wait)timer = 0;
+        if (wait == float.PositiveInfinity) timer = wait;
         preWait = wait;
         if (timer <= 0)
         {
