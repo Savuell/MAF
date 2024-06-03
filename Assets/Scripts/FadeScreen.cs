@@ -5,46 +5,45 @@ using UnityEngine;
 public class FadeScreen : MonoBehaviour
 {
     public bool fadeOnStart = true;
-    public float fadeDuration = 2;
+    public static float startFadeDuration = 3;
+    public static float fadeDuration = 0.9f;
     public Color fadeColor;
     public AnimationCurve fadeCurve;
     public string colorPropertyName = "_Color";
     private Renderer rend;
 
-    // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<Renderer>();
         rend.enabled = false;
 
-        if (fadeOnStart)
-            FadeIn();
+        if (fadeOnStart)FadeOut(startFadeDuration);
     }
 
-    public void FadeIn()
+    public void FadeOut(float duration)
     {
-        Fade(1, 0);
+        Fade(1, 0, duration);
     }
     
-    public void FadeOut()
+    public void FadeIn(float duration)
     {
-        Fade(0, 1);
+        Fade(0, 1, duration);
     }
 
-    public void Fade(float alphaIn, float alphaOut)
+    public void Fade(float alphaIn, float alphaOut, float duration)
     {
-        StartCoroutine(FadeRoutine(alphaIn,alphaOut));
+        StartCoroutine(FadeRoutine(alphaIn, alphaOut, duration));
     }
 
-    public IEnumerator FadeRoutine(float alphaIn,float alphaOut)
+    public IEnumerator FadeRoutine(float alphaIn, float alphaOut, float duration)
     {
         rend.enabled = true;
 
         float timer = 0;
-        while(timer <= fadeDuration)
+        while(timer <= duration)
         {
             Color newColor = fadeColor;
-            newColor.a = Mathf.Lerp(alphaIn, alphaOut, fadeCurve.Evaluate(timer / fadeDuration));
+            newColor.a = Mathf.Lerp(alphaIn, alphaOut, fadeCurve.Evaluate(timer / duration));
 
             rend.material.SetColor(colorPropertyName, newColor);
 

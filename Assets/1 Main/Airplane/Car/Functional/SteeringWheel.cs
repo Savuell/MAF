@@ -10,10 +10,10 @@ public class SteeringWheel : MonoBehaviour
     private List<GameObject> hand = new List<GameObject>();
     private InputActionProperty currentHand;
     private int handed;
-    private float rot0;
-    private float deltaRot, preRot;
-    private int times360;
-    [HideInInspector] public float steerAngle;
+    /**/[SerializeField] private float rot0;
+    /**/[SerializeField] private float deltaRot, preRot;
+    /**/[SerializeField] private int times360;
+    /*[HideInInspector]*/ public float steerAngle;
     void FixedUpdate()
     {
         if (handed > 0)
@@ -29,7 +29,7 @@ public class SteeringWheel : MonoBehaviour
         else
         {
             rot0 = 999;
-            steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steeringWheel.transform.localEulerAngles.z), Mathf.Abs(steerAngle * Time.deltaTime * 5)));
+            steeringWheel.transform.localEulerAngles -= new Vector3(0, 0, Mathf.Sign(steerAngle) * Mathf.Min(Mathf.Abs(steerAngle*Time.deltaTime*10), 15));
         }
         Calculate();
     }

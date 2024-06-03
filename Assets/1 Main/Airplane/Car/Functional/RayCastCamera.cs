@@ -4,41 +4,46 @@ using UnityEngine;
 
 public class RayCastCamera : MonoBehaviour
 {
-    [SerializeField] private Material outline;
+    [SerializeField] private List<Material> outline = new List<Material>();
     [HideInInspector] public List<Material> saveMaterial = null;
+    private int outlineMode;
     private RaycastHit hit;
     private GameObject hitObject, saveHitObject, canvas;
     private bool rayCast;
+    private int k;
     void FixedUpdate()
     {
         rayCast = Physics.Raycast(transform.position, transform.forward, out hit, 2, LayerMask.GetMask("CameraRaycast"));
         if (rayCast)
         {
-            hitObject = hit.collider.transform.parent.GetChild(0).gameObject;
-            if (saveHitObject!=null && hitObject != saveHitObject) ReturnMaterial();
-            canvas = hit.collider.transform.parent.GetChild(1).gameObject;
-            canvas.SetActive(true);
-            if (saveMaterial.Count == 0)
+            switch (hit.collider.tag)
             {
-                saveMaterial = new List<Material>();
-                for (int i = 0; i < hitObject.transform.childCount; i++)
-                {
-                    MeshRenderer mesh = hitObject.transform.GetChild(i).GetComponent<MeshRenderer>();
-                    saveMaterial.Add(mesh.material);
-                    mesh.material = outline;
-                }
+                case "OutlineOrange": outlineMode = 0; break;
+                case "OutlineGreen": outlineMode = 1; break;
+                default: outlineMode = -1; break;
             }
-            saveHitObject = hitObject;
+            if (outlineMode != -1)
+            {
+                hitObject = hit.collider.transform.parent.GetChild(0).gameObject;
+                if (saveHitObject != null && hitObject != saveHitObject) ReturnMaterial();
+                canvas = hit.collider.transform.parent.GetChild(1).gameObject;
+                canvas.SetActive(true);
+                if (saveMaterial.Count == 0)
+                {
+                    saveMaterial = new List<Material>();
+                    FindAllChildren(hitObject, true);
+                }
+                saveHitObject = hitObject;
+            }
+            else if (saveHitObject != null && hitObject == saveHitObject) ReturnMaterial();
         }
         else if (saveHitObject && saveMaterial.Count>0) ReturnMaterial();
 
     }
     void ReturnMaterial()
     {
-        for(int i=0;i<saveHitObject.transform.childCount;i++)
-        {
-            saveHitObject.transform.GetChild(i).GetComponent<MeshRenderer>().material = saveMaterial[i];
-        }
+        k = 0;
+        FindAllChildren(saveHitObject, false);
         canvas.SetActive(false);
         canvas = null;
         saveHitObject = null;
@@ -49,5 +54,25 @@ public class RayCastCamera : MonoBehaviour
         if (!rayCast) Gizmos.color = Color.red;
         else Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * 2);
+    }
+    private int FindAllChildren(GameObject obj, bool set)
+    {
+        int i;
+        for (i = 0; i < obj.transform.childCount; i++)
+        {
+            if (FindAllChildren(obj.transform.GetChild(i).gameObject, set) > 0) continue;
+            if (set)
+            {
+                MeshRenderer mesh = obj.transform.GetChild(i).GetComponent<MeshRenderer>();
+                saveMaterial.Add(mesh.material);
+                mesh.material = outline[outlineMode];
+            }
+            else
+            {
+                obj.transform.GetChild(i).GetComponent<MeshRenderer>().material = saveMaterial[k];
+                k++;
+            }
+        }
+        return i;
     }
 }

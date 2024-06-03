@@ -9,6 +9,9 @@ TagManager:
   - Water
   - Destroyer
   - PlayerHand
+  - OutlineOrange
+  - OutlineGreen
+  - Charge
   layers:
   - Default
   - TransparentFX
