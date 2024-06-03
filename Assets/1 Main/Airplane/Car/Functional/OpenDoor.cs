@@ -33,12 +33,12 @@ public class OpenDoor : MonoBehaviour
     {
         gettingInCar = true;
         doorAxis.isOpen = true;
-        fade.FadeIn(FadeScreen.fadeDuration);
+        fade.FadeOut(FadeScreen.fadeDuration);
         yield return new WaitForSeconds(1);
         doorAxis.isOpen = false;
         playerOrigin.transform.position = CarController.playerInCar ? spawnPointOut.transform.position : spawnPointIn.transform.position;
         CarController.playerInCar = !CarController.playerInCar;
-        fade.FadeOut(FadeScreen.fadeDuration);
+        fade.FadeIn(FadeScreen.fadeDuration);
         gettingInCar = false;
     }
     void GetInCar()
