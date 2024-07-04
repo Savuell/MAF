@@ -3,17 +3,25 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Projectile
+  - Flame
+  - Water
+  - Destroyer
+  - PlayerHand
+  - OutlineOrange
+  - OutlineGreen
+  - Charge
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
+  - IgnorePlayer
+  - OnlyPlayer
+  - CameraRaycast
   - 
   - 
   - 
