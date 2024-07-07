@@ -6,12 +6,12 @@ public class ButtonCar : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float pos1, pos2;
-    /*[HideInInspector]*/ public bool button;
+    [HideInInspector]public bool button;
     private GameObject axis;
     private GameObject hand;
     private Vector3 handPrePos, handDeltaPos;
-     [SerializeField] private bool isPressing;
-     [SerializeField] private bool waitPress;
+    private bool isPressing;
+    private bool waitPress;
     private int handed;
     private void Start()
     {
@@ -31,7 +31,7 @@ public class ButtonCar : MonoBehaviour
     }
     void GetPress()
     {
-        if (handed > 0)
+        if (handed > 0 && !ShowCarDetails.isShowing)
         {
             if (handPrePos == Vector3.zero) handPrePos = hand.transform.position;
             handDeltaPos = hand.transform.position - handPrePos;
@@ -46,8 +46,10 @@ public class ButtonCar : MonoBehaviour
     void Press()
     {
         handPrePos = Vector3.zero;
-        axis.transform.localPosition = Vector3.Lerp(axis.transform.localPosition, new Vector3(0, 0, button ? pos2 : pos1), speed);
-        if (Mathf.Abs(axis.transform.localPosition.z - (button ? pos2 : pos1)) < 0.01f && !waitPress) StartCoroutine(WaitForEndOfPress());
+        axis.transform.localPosition = 
+            Vector3.Lerp(axis.transform.localPosition, new Vector3(0, 0, button ? pos2 : pos1), speed);
+        if (Mathf.Abs(axis.transform.localPosition.z - (button ? pos2 : pos1)) < 0.01f && !waitPress)
+            StartCoroutine(WaitForEndOfPress());
     }
     private void OnTriggerEnter(Collider other)
     {

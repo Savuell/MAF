@@ -13,13 +13,14 @@ public class RayCastCamera : MonoBehaviour
     private int k;
     void FixedUpdate()
     {
-        rayCast = Physics.Raycast(transform.position, transform.forward, out hit, 2, LayerMask.GetMask("CameraRaycast"));
+        rayCast = Physics.Raycast(transform.position, transform.forward, out hit, 5, LayerMask.GetMask("CameraRaycast"));
         if (rayCast)
         {
             switch (hit.collider.tag)
             {
-                case "OutlineOrange": outlineMode = 0; break;
-                case "OutlineGreen": outlineMode = 1; break;
+                case "OutlineOrange": if (!ShowCarDetails.isShowing) outlineMode = 0; else outlineMode = -1; break;
+                case "OutlineDetails": if (ShowCarDetails.isShowing) outlineMode = 0; else outlineMode = -1; break;
+                case "OutlineGreen": if (!ShowCarDetails.isShowing) outlineMode = 1; else outlineMode = -1; break;
                 default: outlineMode = -1; break;
             }
             if (outlineMode != -1)

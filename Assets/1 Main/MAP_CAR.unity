@@ -4538,7 +4538,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182765020}
-  m_Mesh: {fileID: 2534964839176971238, guid: f883b23edc2ac401f87fd135968c2190, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 94e866f9ccf6f48d4929a3ed4bed3f8d, type: 3}
 --- !u!1001 &184786429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9079,8 +9079,8 @@ MonoBehaviour:
   motorSoundKD: 0.4
   charge: {fileID: 1388796975}
   tab: {fileID: 52847714}
-  battery: 32.2
-  batteryLoseSpeed: 1
+  battery: 22.6
+  batteryLoseSpeed: 0
 --- !u!82 &338513216
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58063,7 +58063,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8892251266443347077}
-  m_Mesh: {fileID: -5495902117074765545, guid: f883b23edc2ac401f87fd135968c2190, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: 94e866f9ccf6f48d4929a3ed4bed3f8d, type: 3}
 --- !u!1 &8884234229190570535
 GameObject:
   m_ObjectHideFlags: 0

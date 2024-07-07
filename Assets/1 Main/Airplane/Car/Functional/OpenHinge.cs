@@ -16,7 +16,7 @@ public class OpenHinge : MonoBehaviour
     }
     void Update()
     {
-        if (handed > 0)
+        if (handed > 0 && !ShowCarDetails.isShowing)
         {
             currentHand = hand[0].transform.parent.name == "LeftHand" ? leftHand : rightHand;
             if (handed > 1) currentHand = leftHand.action.ReadValue<float>() > rightHand.action.ReadValue<float>() ? leftHand : rightHand;

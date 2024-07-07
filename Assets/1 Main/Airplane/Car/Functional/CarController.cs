@@ -63,10 +63,10 @@ public class CarController : MonoBehaviour
         }
         if (playerInCar == false && prePlayerInCar != playerInCar)
         {
+            dynamicMoveProvider.enabled = true;
+            locomotion.enabled = true;
             locomotion.transform.parent.parent = null;
             locomotion.transform.parent.transform.eulerAngles = new Vector3(0, 0, 0);
-            locomotion.enabled = true;
-            dynamicMoveProvider.enabled = true;
         }
     }
     void SetStats()
@@ -81,12 +81,27 @@ public class CarController : MonoBehaviour
         {
             battery -= Time.deltaTime * batteryLoseSpeed;
             float pedalForce = leftHandLocomotion.action.ReadValue<Vector2>().y;
-            pedal += pedalForce * pedalMultiplier * (pedalForce < 0 ? pedalMultiplier / 2 : 1);
-            pedal = Mathf.Max(pedal, -1);
+            pedal += pedalForce * pedalMultiplier;
             foreach (WheelCollider wheel in wheels)
             {
-                wheel.motorTorque = Mathf.Min(maxMotorForce, Mathf.Max(0, pedal)) * (1 - Mathf.Min(Mathf.Abs(frontWheels.rotate) / 60, 0.5f));
-                wheel.brakeTorque = pedalForce < 0 ? 1 : 0;
+                if(wheel.motorTorque>0)
+                {
+                    wheel.motorTorque = Mathf.Min(maxMotorForce, Mathf.Max(0, pedal));
+                    if (pedalForce < 0) wheel.motorTorque = 0;
+                    wheel.brakeTorque = pedalForce < 0 ? 1 : 0;
+                }
+                if(wheel.motorTorque == 0)
+                {
+                    wheel.motorTorque = Mathf.Sign(pedal) * Mathf.Min(maxMotorForce, Mathf.Max(0, Mathf.Abs(pedal)));
+                    if (pedalForce == 0) pedal = 0;
+                }
+                if (wheel.motorTorque < 0)
+                {
+                    wheel.motorTorque = Mathf.Max(-maxMotorForce, Mathf.Min(0, pedal));
+                    if (pedalForce > 0) wheel.motorTorque = 0;
+                    wheel.brakeTorque = pedalForce > 0 ? 1 : 0;
+                }
+                wheel.motorTorque *= (1 - Mathf.Min(Mathf.Abs(frontWheels.rotate) / 60, 0.5f));
             }
         }
         if (playerInCar == false && prePlayerInCar != playerInCar)pedal = 0;

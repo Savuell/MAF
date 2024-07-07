@@ -23,7 +23,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     IEnumerator GoToSceneRoutine(int sceneIndex)
     {
-        fadeScreen.FadeOut(FadeScreen.startFadeDuration);
+        fadeScreen.FadeIn(FadeScreen.startFadeDuration);
         yield return new WaitForSeconds(FadeScreen.startFadeDuration);
 
         //Launch the new scene
@@ -37,7 +37,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     IEnumerator GoToSceneAsyncRoutine(int sceneIndex)
     {
-        fadeScreen.FadeOut(FadeScreen.startFadeDuration);
+        fadeScreen.FadeIn(FadeScreen.startFadeDuration);
         //Launch the new scene
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
         operation.allowSceneActivation = false;

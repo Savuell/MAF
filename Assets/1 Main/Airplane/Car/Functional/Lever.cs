@@ -47,7 +47,7 @@ public class Lever : MonoBehaviour
             }
         }
         else wheelTurn = false;
-        if (handed > 0)
+        if (handed > 0 && !ShowCarDetails.isShowing)
         {
             attachment.transform.position = hand.transform.position;
             if (handPrePos == Vector3.zero) handPrePos = attachment.transform.localPosition;

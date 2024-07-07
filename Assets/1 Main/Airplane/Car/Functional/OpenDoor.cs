@@ -12,6 +12,7 @@ public class OpenDoor : MonoBehaviour
     private InputActionProperty currentHand;
     private FadeScreen fade;
     private GameObject playerOrigin;
+    private float characterHeight;
     private CarHinge doorAxis;
     private bool gettingInCar;
     private void Start()
@@ -19,10 +20,11 @@ public class OpenDoor : MonoBehaviour
         fade = Camera.main.transform.GetChild(0).GetComponent<FadeScreen>();
         playerOrigin = Camera.main.transform.parent.parent.gameObject;
         doorAxis = transform.parent.GetComponent<CarHinge>();
+        characterHeight = playerOrigin.GetComponent<CharacterController>().height;
     }
     void Update()
     {
-        if (handed > 0)
+        if (handed > 0 && !ShowCarDetails.isShowing)
         {
             currentHand = hand[0].transform.parent.name == "LeftHand" ? leftHand : rightHand;
             if (handed > 1) currentHand = leftHand.action.ReadValue<float>() > rightHand.action.ReadValue<float>() ? leftHand : rightHand;
@@ -36,7 +38,7 @@ public class OpenDoor : MonoBehaviour
         fade.FadeOut(FadeScreen.fadeDuration);
         yield return new WaitForSeconds(1);
         doorAxis.isOpen = false;
-        playerOrigin.transform.position = CarController.playerInCar ? spawnPointOut.transform.position : spawnPointIn.transform.position;
+        playerOrigin.transform.position = (CarController.playerInCar ? spawnPointOut.transform.position : spawnPointIn.transform.position) + (playerOrigin.transform.position - Camera.main.transform.position) + characterHeight * Vector3.up;
         CarController.playerInCar = !CarController.playerInCar;
         fade.FadeIn(FadeScreen.fadeDuration);
         gettingInCar = false;

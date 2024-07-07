@@ -12,6 +12,7 @@ TagManager:
   - OutlineOrange
   - OutlineGreen
   - Charge
+  - OutlineDetails
   layers:
   - Default
   - TransparentFX

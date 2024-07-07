@@ -17,15 +17,15 @@ public class FadeScreen : MonoBehaviour
         rend.enabled = false;
 
         if (fadeOnStart)
-            FadeOut(startFadeDuration);
+            FadeIn(startFadeDuration);
     }
 
-    public void FadeOut(float duration)
+    public void FadeIn(float duration)
     {
         Fade(1, 0, duration);
     }
     
-    public void FadeIn(float duration)
+    public void FadeOut(float duration)
     {
         Fade(0, 1, duration);
     }
